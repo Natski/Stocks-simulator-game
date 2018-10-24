@@ -1,0 +1,53 @@
+body{
+    background: url(investment1.jpg) no-repeat center;
+    background-size: cover;
+}
+.main-section{
+    margin: auto;
+    margin-top: 130px;
+    padding: 0;
+}
+.body2{
+    margin-top:-60px !important;
+}
+h4,h2,h3{
+    color: rgb(0, 0, 0) !important;
+}
+.modal-content{
+    background-color: #3f3e3e !important;
+    opacity: .7;
+    padding: 0 20px;
+    border-radius: 8px;
+}
+.user-img img{
+    height: 120px;
+    width: 120px;
+}
+.user-img{
+    margin-top: -60px;
+    margin-bottom: 45px;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+.form-group input{
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+.form-input input[type=submit]{
+    width: 40%;
+    margin: 5px 0 25px;
+    
+}
+.btn-success{
+    border-radius: 5px;
+}
+.forgot{
+    padding: 5px 0 25px;
+}
+.forgot a{
+    color: #daf1ff;
+}

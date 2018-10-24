@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="indexstyle.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Create Account</title>
+</head>
+<body>
+<div class="body2">
+    <div class="modal-dialog text-center">
+		<div class="col-sm-9 main-section">
+			<div class="modal-content">
+			<div class="col-12 user-img" ><h3>Registration</h3></div> 
+				<div class="col-12 form-input">
+				<form method="POST" action="regis.php">
+					<div class="form-group">
+						<input type="text" name="student" class="form-control" placeholder="Student Number" required>
+					</div>
+					<div class="form-group">
+					<input type="text" name="sfname" class="form-control" placeholder="Input First Name" required>
+					</div>
+					<div class="form-group">
+					<input type="text" name="sinitial" class="form-control" placeholder="Input Middle initial" required>
+					</div>
+					<div class="form-group">
+					<input type="text" name="slname" class="form-control" placeholder="Input Last Name" required>
+					</div>
+					<div class="form-group" class="form-control">
+					<select name="sec" id="sec" class="form-control">
+						<option value="3-AFM">3-AFM</option>
+						<option value="3-BFM">3-BFM</option>
+						<option value="3-CFM">3-CFM</option>
+					</select>
+					</div>
+					<div>
+					<label class="text-info" for="">If your Section is not on the list please check</label>
+					<label class="text-info"> Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()"></label>
+					</div>
+					<div class="form-group">
+					<input type="text" id="section" class="form-control" name="sec" disabled style="display:none" placeholder="Input your Course Section" required>
+					</div>
+					<div class="form-group">
+					<input type="password" name="spass" class="form-control" placeholder="Input Password" required>
+					</div>
+					<div class="form-group">
+					<input type="password" name="sren" class="form-control" placeholder="Re-Enter Password" required>
+					</div>
+					<input type="Submit" class="btn btn-success" value="Register"><br>
+					<input type="reset" class="btn btn-danger">
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+		function myFunction() {
+			var checkBox = document.getElementById("myCheck");
+			var text = document.getElementById("section");
+			if (checkBox.checked == true){
+				text.style.display = "block";
+				document.getElementById("sec").style.display = "none";
+				document.getElementById("sec").disabled = true;
+				document.getElementById("section").disabled = false;
+			} else {
+			   text.style.display = "none";
+			   document.getElementById("sec").style.display = "block";
+			   document.getElementById("section").disabled = true;
+			   document.getElementById("sec").disabled = false;
+			}
+		}
+		</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>

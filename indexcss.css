@@ -1,0 +1,157 @@
+body{
+    background-color: rgb(138, 19, 19) !important;
+}
+.scroller{
+    overflow: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+#name{
+    float: left;
+    position: relative;
+    padding-right: 10%;
+    padding-top: 12%;
+    margin-left: 15%;
+    color: white;
+}
+.sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+.sidenav label{
+    color: white;
+}
+h1,h2,h3,h4{
+    color: white;
+}
+#main {
+    margin-top: 2%;
+    margin-left: 16%;
+    width: 82%;
+}
+.bar{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.bar form{
+    margin-left: 80%;
+}
+.bar input[type=submit]{
+    width: 50% !important;
+    height: 30px !important;
+    padding: 5px !important;
+}
+.title{
+    text-align: center;
+    color: white;
+}
+#reg{
+    text-align: center;
+    color: white;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+input[type=text], input[type=password], input[type=submit], input[type=reset], input[type=number],select{
+    margin: 20px 0px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 5px;
+    width: 60%;
+    font-family: bebas;
+    letter-spacing: 1px;	
+}
+
+ input[type=submit], input[type=button]{
+     background-color: #000 ;
+     color: #fff;
+     font-family: bebas;
+     letter-spacing: 7px;
+     cursor: pointer;
+ }
+ button{
+    background-color: #000;
+    color: #fff;
+    font-family: bebas;
+    letter-spacing: 7px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.table{
+    width: 1000px !important;
+    height: auto !important;
+    background-color: rgb(34, 33, 33);
+    border-radius: 5px;
+    overflow: auto !important;
+    margin-top: .5%;
+ }
+ .account{
+     display: flex !important;
+ }
+ .account input[type=text]{
+     margin-right: 20px;
+ }
+ .account h4{
+     margin-top: 2.5%;
+     margin-right: 15px;
+ }
+ .ID{
+     display: flex;
+     margin-left: -400px;
+ }
+ .ID input[type=text],input[type=submit]{
+    margin-right: 20px;
+}
+.ID h4{
+    margin-top: 2.8%;
+    margin-right: 15px;
+}
+ .portfolio {
+    display: flex;
+     
+     /* background-color: white; */
+     margin-left: 16%;
+     border-radius: 5px;
+ }
+ .name{
+     display: flex;
+ }
+ .name input[type=text],input[type=submit]{
+    margin-right: 20px;
+}
+.name h3{
+    margin-top: 1.5%;
+    margin-right: 15px;
+}
+.pass{
+    display: flex;
+    margin-left: -350px;
+}
+.pass input[type=password],input[type=submit]{
+    margin-right: 20px;
+}
+.pass h4{
+    margin-top: 2.7%;
+    margin-right: 15px;
+}

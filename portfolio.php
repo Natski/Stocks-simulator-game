@@ -10,26 +10,64 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="indexcss.css">
-    <title>Portfolio</title>
+  <title>Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-        <!-- Student NAV BAR -->
-    <div class="sidenav">
-    <?php
-        require ('navbar.php');?>
-            <a href="indexstudent.php">Home</a>
-            <a href="market.php">Market</a>
-            <a href="studentaccnt.php">Account Settings</a>
-            <a href="Logout.php">Logout</a>
-    </div>
-            <!-- MAin Body -->
-    <div id="main">
-    <?php
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">SBSM</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+            <li class="nav-link"><a href="indexstudent.php">News</a></li>
+            <li class="nav-link "><a href="market.php">Market</a></li>
+            <li class="nav-link active"><a href="portfolio.php">Portfolio</a></li>
+            </ul>
+			
+            <ul class="nav navbar-nav"><!--SEARCH BAR-->
+                <li> 
+                <form action="viewstocks.php" method="POST" class="form-inline my-2 my-xs-0" >
+                     <input  list="search" class="form-control" name="search" placeholder="Search Stock" style="margin-top: 4% !important;">
+                     <datalist id="search" >
+                     <?php
+                        include 'restapi.php';
+                            foreach($metadata as $value){
+                                echo '<option  value="' .$value ->{'symbol'}.'">' .$value ->{'name'}.'</option>';
+                            }
+                    ?> 
+                    </datalist>
+                </form>
+                 </li>
+            </ul><!--End search-->
+
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Account <span class="caret"></span></a>
+
+                <ul class="dropdown-menu">
+                <?php require ('studentname.php')?>
+                <li><a href="studentaccnt.php"><span class="glyphicon glyphicon-user"></span> Account Settings</a></li>
+                <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+                </ul>
+            </li>
+            </ul>
+
+        </div>
+    </nav>
+    
+    <div class="main">
+        <div class="modal-content">
+        <?php
             
             $name=$_SESSION['id'];
             //update total profit
@@ -38,36 +76,52 @@ else{
             where portfolio.Student_No='$name'";
             $update=mysqli_query($conn,$up);
             //select
-            $qy="select Buying_Power,Total_Profit,Cashplustotal from portfolio where Student_No='$name'";
+            $qy="select Buying_Power,Total_Profit from portfolio where Student_No='$name'";
             $res=mysqli_query($conn,$qy);
             $row=mysqli_fetch_array($res);
             if (!$res) {
                 printf("Error: %s\n", mysqli_error($conn));
                 exit();
             }
-                        // Buying Power
-                echo "<h4>Buying Power</h4>";
-                echo "<input type='text' placeholder='". number_format($row['Buying_Power'],2). "' readonly>";
-                echo "<br><br> ";
-                        // Total Profit
-                echo "<h4>Total Profit</h4>";
-                echo "<input type='text' placeholder='".number_format($row['Total_Profit'],2)."' readonly>";
-                echo "<br><br> ";
-
             ?>
-    </div>
-            <!-- Stack status of the students -->
-            <!-- table -->
-    <div class="portfolio">
-        <table class="table table-hover table-dark">
-        <tr>
-        <th align='center' >Name</th>
-        <th align="center" >Quantity</th>
-        <th align="center" >Date Purchased</th>
-        <th align="center" >Profit</th>
+            <div class="row">
+                <div class="col-sm-2 bg-primary desc">
+                    Buying Power
+                </div>
 
-        </tr>
-        <?php
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" class="col-sm-4" placeholder="<?php echo number_format($row['Buying_Power'],2)?>" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Total Profit
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input  type="text" class="col-sm-4" placeholder="<?php echo number_format($row['Total_Profit'],2)?>" readonly>
+                        </div>
+                    </div>
+            </div>
+
+            <table class="table table-striped table-hover tables">
+                    <thead>
+                    <tbody>
+                    <tr>
+                    <th align='center' >Name</th>
+                    <th align="center" >Quantity</th>
+                    <th align="center" >Date Purchased</th>
+                    <th align="center" >Profit</th>
+                    <th align="center" > </th>
+                    </tr>
+                    </thead>
+
+                    <tr>
+                    <?php
          // $rows=mysqli_fetch_array($view);
         $sel="select  Name,Symbol,Quantity,Date_purchase,AmountShares from history where Student_No='$name'";
         $view=mysqli_query($conn,$sel);
@@ -88,16 +142,12 @@ else{
 
                     if ($get == $symbol) {
                     $price_amount = $metadata[$counter]->{'price'}->{'amount'};
-
-                        // $slct="select  Name,Symbol,Quantity,AmountShares from history where Student_No='$name' ";
-                        //         $cal=mysqli_query($conn,$slct);    
-                        //         //Get amount purchased
-                        //         $row0 = mysqli_fetch_array($cal);
                                 $gain=$row1['AmountShares'];
                                 $piece=$row1['Quantity'];
-                                $gndshares=($price_amount*$piece)-$gain;
+                                $gndshares=floor($price_amount*$piece);
+                                $sample=$gndshares-$gain;
                                 // form submit to sell and display the stack status
-                        echo '<form action="Selling.php" method="POST">';
+                        echo '<form action="selling.php" method="POST">';
                         echo '<tr>';
                                 echo '<td align="center" >'.$row1['Name']. ' </td>';
                                 echo '<input type="hidden" name="label" value="' .$row1['Name']. '">';
@@ -106,10 +156,10 @@ else{
                                 echo '<input type="hidden" name="quantity" value="' .$row1['Quantity']. '">';
                                 echo '<td align="center">' . $row1['Date_purchase'] . ' </td>';
                                 echo '<input type="hidden" name="date" value="' .$row1['Date_purchase']. '">';
-                                echo '<td align="center" >' . $gndshares . ' </td>';
+                                echo '<td align="center" >' . number_format($sample ,2) . ' </td>';
                                 echo '<input type="hidden" name="price" value="' .$price_amount. '">';
                                 echo '<input type="hidden" name="gain" value="' .$gain. '">';
-                                echo '<td><input type="submit" class="btn btn-outline-danger" value="Sell" data-toggle="modal" data-target="#exampleModalCenter"></td>';
+                                echo '<td><input type="submit" class="btn btn-danger" value="Sell" data-toggle="modal" data-target="#exampleModalCenter"></td>';
                             
                         echo '</tr>';
                        echo '</form>';
@@ -127,16 +177,22 @@ else{
                 
                 }
                 }   
-                echo '</table>';
-        ?>
+                ?>
+                        <!-- <td>Jollibee Corp.</td>
+                        <td>1</td>
+                        <td>November 1, 2018</td>
+                        <td>9,999</td>
+                        <td><input type="submit" class="btn btn-danger" value="Sell" data-toggle="modal" data-target="#exampleModalCenter"></td>
+                    </tr> -->
+                
+                    </tbody>
+            </table>
+
+
+         
         </div>
-                <!-- end table -->
-  </div>
-</div>
+    </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </html>
 <?php
 }

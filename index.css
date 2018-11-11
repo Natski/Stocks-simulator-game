@@ -1,0 +1,65 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.main{
+    width:100%;
+    height:1080px;
+    padding-top:80px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0;
+}
+
+.container-fluid{
+    height:50px;
+}
+
+/*Market, Portfolio, Account Settings*/
+
+.modal-content{
+    background-color:#660000;
+    height:1000px;
+    color: white;
+}
+
+.desc{
+    height:60px;
+    margin-left: 15px;
+    margin-top: 5px;
+    border-radius: 0px 10px 10px 0px; 
+    text-align:center;
+    padding: 10px;
+    font-size: 20px;
+    padding-top: 18px;
+}
+
+.search{
+    height: 35px;
+    margin-top: 10px;
+    border-radius: 0px 10px 10px 0px;
+    outline: none;
+}
+    .search:hover{
+        color: wheat;
+    }
+
+
+input[type=text],[type=number]{
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    height: 35px;
+    color: black;
+}
+.tables{ /*for tables in Portfolio*/
+    width:90%;
+    margin: 5%;
+    background-color: white;
+    color: black;
+}
+
+
+
+

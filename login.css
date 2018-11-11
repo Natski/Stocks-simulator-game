@@ -1,0 +1,93 @@
+body{
+    margin: 0;
+    padding: 0;
+   }
+
+.main{
+    display: flex;
+        
+        background-size: cover;
+        background-attachment: fixed;
+        -webkit-animation: mybg 40s infinite; /* Chrome, Safari, Opera */
+    animation: mybg 40s infinite;
+}
+
+        @keyframes mybg {
+            0% {background-image: url("img/tick.png");}
+            30% {background-image: url("img/tick.png");}
+            50% {background-image: url("img/bar.jpg");}
+            70% {background-image: url("img/bar.jpg");}
+            85%{background-image: url("img/dollar.jpg");}
+            100%{background-image: url("img/dollar.jpg");}
+        }
+
+.right-col{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+    
+    .login{
+        background-image: url("img/gray.jpg");
+        border-radius: 5px;
+        box-shadow: 4px 2px grey;
+        width: 60%;
+        height: 80%;
+    }
+    .login img{
+        margin-top: 5%;
+        margin-left:30%;
+        width: 37%;
+        height: 25%;
+    }
+    .login p{
+        text-align: center;
+        background-color: red;
+        color: white;
+        padding-top: 2%;
+        width: 40%; 
+        height: 5%;
+    }
+    .login input{
+        padding-left:1%;
+        margin-top: 6.5%;
+        width: 65%;
+        height:7%;
+        border: solid 1px black;
+        outline: none;
+    }
+    .login input[type=submit]{
+        background-color:orange;
+        width: 30%;
+        height: 7%;
+    }
+
+.left-col{
+    display: flex;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+        .left-col img{
+            transform:scale(0.80);
+        }
+
+
+.social1{
+    position: fixed;
+    transform: scale(.25);
+    bottom: -110px;
+    left: -110px;
+}
+
+.social2{
+    position: fixed;
+    transform: scale(.25);
+    bottom: -110px;
+    left: -50px;
+}

@@ -9,7 +9,7 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Teacher</title>
+  <title>CFM</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -27,9 +27,10 @@ else{
             </div>
 
             <ul class="nav navbar-nav">
+            <li class="nav-link "><a href="indexteacher.php">Home</a></li>
             <li class="nav-link "><a href="afm.php">AFM</a></li>
             <li class="nav-link "><a href="bfm.php">BFM</a></li>
-            <li class="nav-link "><a href="cfm.php">CFM</a></li>
+            <li class="nav-link active"><a href="cfm.php">CFM</a></li>
 
             </ul>
 
@@ -53,8 +54,9 @@ else{
     <div class="main">
         <div class="modal-content">
             
-                <center><h2>Over All Highest Profit</h2>
-                    <h4 class="fa fa-certificate" style="font-size:36px;color:gold">Top 5</h4>
+                <center>
+                    <h4 class="fa fa-certificate" style="font-size:36px;color:gold">
+                       Top 5 CFM</h4>
                 </center>
 
             <table class="table table-striped table-hover tables">
@@ -68,26 +70,31 @@ else{
                     <th align="center" >Total Cash</th>
                     </tr>
                     </thead>
+
                     
+                    <tr>
                     <?php
                     $groupcode=mysqli_query($conn,"select Passcode from teacher where Teacher_ID='$name'") or die ("Failed1". mysqli_error($conn));
                     $passcode=mysqli_fetch_array($groupcode);
                     $code=$passcode['Passcode'];
 
-                    $display="select finmastudents.Student_No,finmastudents.fname,finmastudents.initial,finmastudents.lname,finmastudents.GroupCode,finmastudents.sec,portfolio.Buying_Power
-                    from finmastudents,portfolio where finmastudents.Student_No=portfolio.Student_No  AND 
-                    (finmastudents.sec='3-AFM' OR finmastudents.sec='3-BFM' OR finmastudents.sec='3-CFM') AND finmastudents.GroupCode='$code' ORDER BY portfolio.Buying_Power DESC";
-                    $try=mysqli_query($conn,$display) or die ("Failed!". mysqli_error($try)) ;
+                    $display="select finmastudents.Student_No,finmastudents.fname,finmastudents.initial,finmastudents.lname,finmastudents.sec,finmastudents.GroupCode,portfolio.Buying_Power
+                    from finmastudents,portfolio where finmastudents.Student_No=portfolio.Student_No 
+                    AND finmastudents.sec='3-CFM' AND finmastudents.GroupCode='$code' ORDER BY portfolio.Buying_Power DESC";
+                    $try=mysqli_query($conn,$display) or die ("Failed1". mysqli_error($try)) ;
                     $counter=1;
                     while ($records=mysqli_fetch_array($try)){
                         echo '<tr>';
-                                echo '<td align="center" >'. $counter. '</td>';
+                                echo '<td align="center" >'. $counter. '</td>';   
                                 echo '<td align="center" >'. $records['Student_No']. '</td>';
                                 echo '<td align="center">' . $records['fname'] . ' ' . $records['initial'] . '. ' . 
                                 $records['lname'] . '</td>';
                                 echo '<td align="center">' . $records['sec'] . '<a> </td>';
                                 echo '<td align="center" >' . number_format($records['Buying_Power'],2) . '</td>';
-                                
+                                echo '<form action="deletestudent.php" method="POST">';
+                                echo '<input type="hidden" name="id" value="' .$records['Student_No']. '">';
+                                echo '<td><input type="submit" class="btn btn-danger" value="remove" data-toggle="modal" data-target="#exampleModalCenter"></td>';
+                                echo '</form>';
                         echo '</tr>';
                     $counter++;
                     if($counter>=6){
@@ -95,6 +102,46 @@ else{
                     }
                     }
                 ?>
+                    </tbody>
+            </table>
+
+
+            <!--List of Students-->
+
+            <center><h2>CFM Students</h2></center>
+
+            
+            <table class="table table-striped table-hover tables">
+                    <thead>
+                    <tbody>
+                    <tr>
+                    <th align='center' >Student Number</th>
+                    <th align="center" >Name</th>
+                    <th align="center" >Section</th>
+                    <th align="center" >Total Cash</th>
+                    </tr>
+                    </thead>
+
+                    
+                    <tr>
+                    <?php
+                    
+                    while ($records=mysqli_fetch_array($try)){
+                            // form submit to delete
+                        echo '<form action="deletestudent.php" method="POST">';
+                        echo '<tr>';
+                                echo '<td align="center" >'. $records['Student_No']. '</td>';
+                                echo '<input type="hidden" name="id" value="' .$records['Student_No']. '">';
+                                echo '<td align="center">' . $records['fname'] . ' ' . $records['initial'] . '. ' . 
+                                $records['lname'] . '</td>';
+                                echo '<td align="center">' . $records['sec'] . '<a> </td>';
+                                echo '<td align="center" >' . number_format($records['Buying_Power'],2) . '</td>';
+                                echo '<td><input type="submit" class="btn btn-danger" value="remove" data-toggle="modal" data-target="#exampleModalCenter"></td>';
+                        echo '</tr>';
+                        echo '</form>';
+                    }
+                ?>
+
                     </tbody>
             </table>
 

@@ -10,26 +10,63 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="indexcss.css">
-  <title>home</title>
+  <title>ViewStocks</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <!-- Nav Bar -->
-  <div class="sidenav">
-        <?php
-        require ('navbar.php');?>
-            <a href="market.php">Market</a>
-            <a href="portfolio.php">Portfolio</a>
-            <a href="studentaccnt.php">Account Settings</a>
-            <a href="Logout.php">Logout</a>
-</div>
-    <!-- Main Body -->
-<div id="main">
-<?php
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">SBSM</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+            <li class="nav-link"><a href="indexstudent.php">News</a></li>
+            <li class="nav-link"><a href="market.php">Market</a></li>
+            <li class="nav-link"><a href="portfolio.php">Portfolio</a></li>
+            </ul>
+            
+            <ul class="nav navbar-nav"><!--SEARCH BAR-->
+                <li> 
+                <form action="viewstocks.php" method="POST" class="form-inline my-2 my-xs-0" >
+                     <input  list="search" class="form-control" name="search" placeholder="Search Stock" style="margin-top: 4% !important;">
+                     <datalist id="search" >
+                     <?php
+                        include 'restapi.php';
+                            foreach($metadata as $value){
+                                echo '<option  value="' .$value ->{'symbol'}.'">' .$value ->{'name'}.'</option>';
+                            }
+                    ?> 
+                    </datalist>
+                </form>
+                 </li>
+            </ul><!--End search-->
+            
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Account <span class="caret"></span></a>
+
+                <ul class="dropdown-menu">
+                <?php require('studentname.php')?>
+                <li><a href="studentaccnt.php"><span class="glyphicon glyphicon-user"></span> Account Settings</a></li>
+                <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+                </ul>
+            </li>
+            </ul>
+
+        </div>
+    </nav>
+    
+    <div class="main">
+    <?php
 
 // require ('scanapi.php');
 require ('restapi.php');
@@ -63,36 +100,83 @@ while ($check) {
     header("refresh:0;url=indexstudent.php");
   }
     else{
-      ?>   
-        <center>
-        <!-- Title of the stocks -->
-        <h3 class="title">Name: <?php echo $title ?></h3>
-        <!-- Price of the stocks -->
-        <h3>Price</h3><input type="text" value=
-        <?php 
-        echo $price_currency;
-        echo number_format($price_amount,2);  
-        ?> readonly>
-            <!-- Percent Change of the stocks -->
-        <h3>Percent Change</h3><input type="text" value=<?php echo $percent_change?> readonly>
-            <!-- Volume of the stocks -->
-        <h3>Volume</h3><input type="text" value=<?php echo number_format($volume,2) ?> readonly>
-            <!-- Symbol of the Stocks -->
-        <h3>Symbol</h3><input type="text" value=<?php echo $symbol ?> readonly>
-        <br>
-        <button onclick="goBack()" class="btn btn-outline-secondary">Go Back</button>
-        </center>
-       <?php 
+      ?>
+        <div class="modal-content">
+
+                <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Name
+                    </div>
+        
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=<?php echo $title ?> readonly>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Price
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=
+                    <?php 
+                        echo $price_currency;
+                        echo number_format($price_amount,2);  
+                    ?> readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Percent Change
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=<?php echo $percent_change?> readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Volume
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=<?php echo number_format($volume,2) ?> readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Symbol
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=<?php echo $symbol ?> readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="index.php" class="btn btn-danger " style ="margin-left:33px;" >
+                <span class="fa fa-download mr-2"></span>
+                Back</a>
+        </div>
+    </div>
+    <?php 
     }
 }
 ?>
-</div>
 </body>
-<script>
-        function goBack() {
-      window.history.back();
-      }
-    </script>  
 </html>
 <?php
 }

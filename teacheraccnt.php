@@ -9,97 +9,137 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="indexcss.css">
-    <title>Account Settings</title>
+  <title>Account Settings</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="teacher.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="sidenav">
-        <?php
-            // $query="select *  from students where sec='3-AFM' OR sec='3-BFM' OR sec='3-CFM' ";
-            // $result=mysqli_query($conn,$query) or die("Error Occured!". mysqli_error($conn));
 
-            $name=$_SESSION['id'];
-            $q="select FName,Mid_initial,LName from teacher where Teacher_ID='$name'";
-            $r=mysqli_query($conn,$q);
-            $row=mysqli_fetch_array($r);
-                echo "<label>Name :";
-                echo $row['FName'];
-                echo "  ";
-                echo $row['Mid_initial'];
-                echo ".  ";
-                echo $row['LName'];
-                echo "</label><br>";
-        ?>
-         <br><label>Teacher Id :<?=$_SESSION["id"];?></label><br><br>
-            <a href="indexteacher.php">Home</a>
-            <a href="afm.php">AFM</a>
-            <a href="BFM.php">BFM</a>
-            <a href="CFM.php">CFM</a>
-            <!-- <a href="validation.php">Request(<?php 
-            // echo mysqli_num_rows($result)?>)</a> -->
-            <a href="Logout.php">Logout</a>
-    </div>
-    <div id="main">
-    <?php 
-    $name=$_SESSION['id'];
-    $teach="select Fname,Mid_initial,Lname,Password from teacher where Teacher_ID='$name'";
-    $teacher=mysqli_query($conn,$teach);
-    $row0=mysqli_fetch_array($teacher);
-    ?>
-    <h2 class="title">Change Profile information</h2>
-            <!-- NAME -->
-        <div class="account">
-        <h4>Name:</h4>
-            <input type="text" name="fname" class="form-control" value=<?php echo $row0['Fname']?> readonly>
-            <input type="text" name="fname" class="form-control" value="<?php echo $row0['Mid_initial'];?>." readonly>
-            <input type="text" name="lname" class="form-control" value=<?php echo $row0['Lname'];?> readonly>
-        </div>
-        <!-- end Name -->
-        <!-- Teacher ID -->
-        <h3>Change Information</h3>
-    <form action="teachchange.php" method="POST" enctype="multipart/form-data">
-    <div class="ID">
-    <h4>TeacherID:</h4>
-    <input type="text" name="ID" class="form-control" placeholder="Teacher ID" required>
-    <input type="submit" name=upload class="form-control" class="btn btn-primary" value="Update teacher ID" onclick="myFunction()"><input class="form-control" class="btn btn-primary" type="reset">
-    </div>
-    </form>
-    <!-- end teacher ID -->
-    <!-- change teacher name -->
-    <form action="teachchange.php" method="POST" enctype="multipart/form-data">
-        <div class="name">
-        <h3>Name:</h3>
-        <input type="text" name="fname" class="form-control" placeholder="First Name" required>
-        <input type="text" name="initial" class="form-control" placeholder="Middle Initial" required>
-        <input type="text" name="lname" class="form-control" placeholder="Last Name" required>
-        <input type="submit" name=upload class="form-control" value="Update teacher Name" onclick="myFunction()"><br><input class="form-control" type="reset">
-        </div>
-    </form>
-    <!-- end teacher name -->
-    <!-- change password -->
-    <form action="teachchange.php" method="POST" enctype="multipart/form-data">
-    <div class="pass">
-        <h4>ChangePassword:</h4>
-        <input type="password" name="pass" class="form-control" placeholder="Password" required>
-        <input type="submit" name=upload class="form-control" value="Update password" onclick="myFunction()"><br><input class="form-control" type="reset">
-    </div>
-    </form>
-    <!-- end password -->
-    <!-- generate group code -->
-        <h4>Generate new Group Code</h4>
-        <button id="Generate" onclick="code()">Generate</button>
-            <form action="teachchange.php" method="POST" enctype="multipart/form-data">
-                <div id="code">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">SBSM</a>
+            </div>
 
+            <ul class="nav navbar-nav">
+            <li class="nav-link"><a href="indexteacher.php">HOME</a></li>
+            <li class="nav-link"><a href="afm.php">AFM</a></li>
+            <li class="nav-link"><a href="bfm.php">BFM</a></li>
+            <li class="nav-link"><a href="cfm.php">CFM</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Account <span class="caret"></span></a>
+
+                <ul class="dropdown-menu">
+                <?php require ('teachername.php')?>
+                <li><a href="teacheraccnt.php"><span class="glyphicon glyphicon-user"></span> Account Settings</a></li>
+                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+                </ul>
+            </li>
+            </ul>
+
+        </div>
+    </nav>
+    
+    <div class="main">
+        <div class="modal-content">
+       <div class="row">
+                <div class="col-sm-2 bg-primary desc">
+                    Profile Information
                 </div>
-            <input type="submit" id="sub" style="display:none" name="upload" value="Submit Code" disabled>
+
+                <div class="row"><!--Name-->
+                <form action="teachchange.php" method="POST" enctype="multipart/form-data">
+                    <div class="col-sm-12">
+                        <input class="col-sm-4" type="text" name="fname" placeholder="First Name" required>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <input class="col-sm-4" type="text" name="initial" placeholder="Middle Initial" required>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <input class="col-sm-4" type="text" name="lname" placeholder="Last Name" required>
+                    </div>
+                    <div class="col-sm-12">
+                            <input type="submit" name="upload" class=" col-sm-1 btn btn-success up" value="Update teacher Name" data-toggle="modal">
+                            <input type="reset" class=" col-sm-1 btn btn-danger up" value="Reset" data-toggle="modal">
             </form>
-        <!-- end group code -->
-    </div>   
+                    </div>   
+                </div>
+            </div>
+            <form action="teachchange.php" method="POST" enctype="multipart/form-data">
+            <div class="row"><!--Teacher ID-->
+                <div class="col-sm-2 bg-primary desc">
+                    Teacher ID
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" name="ID" class="form-control" placeholder="Teacher ID" required>
+                    </div>
+
+                    <div class="col-sm-12">
+                            <input type="submit" name="upload" class=" col-sm-1 btn btn-success up" value="Update teacher ID" data-toggle="modal">
+                            <input type="reset" class=" col-sm-1 btn btn-danger up" value="Reset" data-toggle="modal">
+            </form>
+                    </div>   
+                </div>
+            </div>
+
+
+            <div class="row"><!--Password-->
+            <form action="teachchange.php" method="POST" enctype="multipart/form-data">
+                    <div class="col-sm-2 bg-primary desc">
+                        Password
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="password" name="pass" class="form-control" placeholder="Password" required>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <input type="submit" name="upload" value="Update password" class=" col-sm-1 btn btn-success up" value="Update" data-toggle="modal">
+                            <input type="reset" class=" col-sm-1 btn btn-danger up" value="Reset" data-toggle="modal">
+            </form>
+                        </div>     
+                    </div>
+            </div>
+
+            <div class="row"><!--Generate Code-->
+                <div class="col-sm-2 bg-primary desc">
+                    Generate Code
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button id="Generate" class="col-sm-2" onclick="code()">
+                            Generate
+                        </button>
+                        <form action="teachchange.php" method="POST" enctype="multipart/form-data">
+                        <div id="code">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <input type="submit" id="sub" style="display:none" name="upload" class=" col-sm-1 btn btn-success up" value="Submit Code" data-toggle="modal">
+                    </div>   
+                </div>
+            </div>
+
+
+      </div>
+    </div>
 </body>
 <script>
     // button show form group code

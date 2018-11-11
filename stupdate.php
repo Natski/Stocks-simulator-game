@@ -77,7 +77,7 @@ require ('Connection.php');
             $pass=$name['pass'];
             $img=$name['image'];
                 if(isset($codes)){
-                    $int="insert into finmastudents Values('$stnum','$fname','$in','$lname','$sec','$pass','$img')";
+                    $int="insert into finmastudents Values('$stnum','$fname','$in','$lname','$sec','$code','$pass','$img')";
                     $query=mysqli_query($conn,$int) or die("Error Occured!". mysqli_error($conn)) or die (mysqli_error($conn));
 
                     $del="delete from students where Student_No='$stnum'";

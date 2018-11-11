@@ -3,14 +3,13 @@ session_start();
 require ('Connection.php');
 if(!isset($_SESSION["id"])){
     header("index.php");
-
 }
-else{
+else{  
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home</title>
+  <title>Order</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -27,12 +26,12 @@ else{
             </div>
 
             <ul class="nav navbar-nav">
-            <!-- <li class="nav-link"><a href="indexstudent.php">News</a></li> -->
+            <li class="nav-link"><a href="indexstudent.php">News</a></li>
             <li class="nav-link"><a href="market.php">Market</a></li>
             <li class="nav-link"><a href="portfolio.php">Portfolio</a></li>
             </ul>
-			
-			<ul class="nav navbar-nav"><!--SEARCH BAR-->
+
+            <ul class="nav navbar-nav"><!--SEARCH BAR-->
                 <li> 
                 <form action="viewstocks.php" method="POST" class="form-inline my-2 my-xs-0" >
                      <input  list="search" class="form-control" name="search" placeholder="Search Stock" style="margin-top: 4% !important;">
@@ -56,7 +55,7 @@ else{
                 <ul class="dropdown-menu">
                 <?php require ('studentname.php')?>
                 <li><a href="studentaccnt.php"><span class="glyphicon glyphicon-user"></span> Account Settings</a></li>
-                <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
                 </ul>
             </li>
@@ -66,36 +65,63 @@ else{
     </nav>
     
     <div class="main">
-        <div class="modal-content card-columns" id="output">
-            San Beda Stock Simulation Game...
-        </div>
-    </div>
+        <div class="modal-content">
+        <?php
+        $label=$_POST['label'];
+        $quantity=$_POST['quantity'];
+        $date=$_POST['date'];
+        // $profit=$_POST['profit'];
+        $price=$_POST['price'];
+        $gain=$_POST['gain'];
+        $symbol=$_POST['sym'];
+        ?>
+        <form action="Sell.php" method="POST">
+            <div class="row">
+                <div class="col-sm-2 bg-primary desc">
+                    Title
+                </div>
 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="col-sm-4" type="text" value=<?php echo $label ?> name="title" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Quantity
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="number" min="1" max="<?php echo $quantity ?>" value="<?php echo $quantity ?>" name="quantity">
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-sm-2 bg-primary desc">
+                        Date Purchased
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input class="col-sm-3" type="text" value=<?php echo $date ?> name="date" readonly>
+                        </div>
+                        <input type="hidden" value=<?php echo $price ?> name="price">
+                        <input type="hidden" value=<?php echo $gain ?> name="gain">
+                        <input type="hidden" value=<?php echo $symbol ?> name="symbol">
+                        <div class="col-sm-12">
+                            <input type="submit" class=" col-sm-3 btn btn-danger up" value="Sell" data-toggle="modal" style="margin-left: 50px;">
+                        </div>   
+                        
+                    </div>
+                </form>
+            </div>
+      </div>
+    </div>
 </body>
-<script>
-           fetch('https://newsapi.org/v2/top-headlines?country=ph&category=business&apiKey=9149b4162da34504994d970545d5e501')
-            .then((res)=>res.json())
-            .then((data)=>{
-                let output='';
-                data.articles.forEach(function(post){
-                    output +=`
-                        <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="${post.urlToImage}" alt="No image exist"> </img>
-                        <div class="card-body">
-                        <div class="card-block text-left">
-                            <h5 class="card-title"> ${post.source.name}</h5>
-                            <p><a href="${post.url}" class="text-secondary" > ${post.title}</a></p>
-                        </div>
-                        </div>
-                        </div>
-                    `;
-                });
-                document.getElementById('output').innerHTML=output;
-            })
-</script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </html>
 <?php
 }

@@ -49,7 +49,7 @@
             $_SESSION['id']=$user;
             header("refresh:0; url=indexstudent.php");
         }else{
-            echo "pwet";
+            echo "ERROR!";
         }
     }
     else{
@@ -71,7 +71,7 @@
             else{
                 echo "Invalid Student Number or Password <br> 
                 Please try again";
-                header("refresh:2; url=index.html");
+                header("refresh:2; url=index.php");
             } 
     }
     mysqli_close($conn);

@@ -9,95 +9,122 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="indexcss.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>AFM</title>
+  <title>AFM</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-            <!-- Navbar -->
-<div class="sidenav">
-        <?php
-            //   $query="select *  from students where sec='3-AFM' OR sec='3-BFM' OR sec='3-CFM' ";
-            //  $result=mysqli_query($conn,$query) or die("Error Occured!". mysqli_error($conn));
-                    //    teachers name
-            $name=$_SESSION['id'];
-            $q="select FName,Mid_initial,LName from teacher where Teacher_ID='$name'";
-            $r=mysqli_query($conn,$q);
-            $row=mysqli_fetch_array($r);
-                echo "<label>Name :";
-                echo $row['FName'];
-                echo "  ";
-                echo $row['Mid_initial'];
-                echo ".  ";
-                echo $row['LName'];
-                echo "</label><br>";
-        ?>
-                    <!-- Teacher Id -->
-         <br><label>Teacher Id :<?=$_SESSION["id"];?></label><br><br>
-            <a href="indexteacher.php">HOME</a>
-            <a href="BFM.php">BFM</a>
-            <a href="CFM.php">CFM</a>
-            <!-- <a href="validation.php">Request(<?php 
-            // echo mysqli_num_rows($result)?>)</a> -->
-            <a href="teacheraccnt.php">Account Settings</a>
-            <a href="Logout.php">Logout</a>
-    </div>
 
-                <!-- Main Body --> 
-    <div id="main">
-        <center><h2>Status</h2>
-        <h4 class="fa fa-certificate" style="font-size:36px;color:gold">Top 5</h4>
-        </center>
-        <center>
-                    <!-- Table Status -->
-    <div>
-        <table class="table table-hover table-dark">
-            <tr>
-                <th>Student Number</th>
-                <th>Name</th>
-                <th>Section</th>
-                <th>Total Cash</th>
-            </tr>    
-            <tr>
-                <?php
-                    $display="select finmastudents.Student_No,finmastudents.fname,finmastudents.initial,finmastudents.lname,finmastudents.sec,portfolio.Buying_Power
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">SBSM</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+            <li class="nav-link "><a href="indexteacher.php">Home</a></li>
+            <li class="nav-link active "><a href="afm.php">AFM</a></li>
+            <li class="nav-link "><a href="bfm.php">BFM</a></li>
+            <li class="nav-link "><a href="cfm.php">CFM</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Account <span class="caret"></span></a>
+
+                <ul class="dropdown-menu">
+                <?php require ('teachername.php')?>
+                <li><a href="teacheraccnt.php"><span class="glyphicon glyphicon-user"></span> Account Settings</a></li>
+                <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+                </ul>
+            </li>
+            </ul>
+
+        </div>
+    </nav>
+    
+    <div class="main">
+        <div class="modal-content">
+            
+                <center>
+                    <h4 class="fa fa-certificate" style="font-size:36px;color:gold">
+                       Top 5 AFM</h4>
+                </center>
+
+            <table class="table table-striped table-hover tables">
+                    <thead>
+                    <tbody>
+                    <tr>
+                    <th align='center' >Rank</th>
+                    <th align='center' >Student Number</th>
+                    <th align="center" >Name</th>
+                    <th align="center" >Section</th>
+                    <th align="center" >Total Cash</th>
+                    </tr>
+                    </thead>
+
+                    
+                    <tr>
+                    <?php
+                $groupcode=mysqli_query($conn,"select Passcode from teacher where Teacher_ID='$name'") or die ("Failed1". mysqli_error($conn));
+                $passcode=mysqli_fetch_array($groupcode);
+                $code=$passcode['Passcode'];
+
+                    $display="select finmastudents.Student_No,finmastudents.fname,finmastudents.initial,finmastudents.lname,finmastudents.sec,finmastudents.GroupCode,portfolio.Buying_Power
                     from finmastudents,portfolio where finmastudents.Student_No=portfolio.Student_No 
-                    AND finmastudents.sec='3-AFM' ORDER BY portfolio.Buying_Power DESC";
+                    AND finmastudents.sec='3-AFM' AND finmastudents.GroupCode='$code' ORDER BY portfolio.Buying_Power ASC";
                     $try=mysqli_query($conn,$display) or die ("Failed1". mysqli_error($try)) ;
-                    $counter=0;
+                    $counter=1;
                     while ($records=mysqli_fetch_array($try)){
                         echo '<tr>';
+                                echo '<td align="center" >'. $counter. '</td>';
                                 echo '<td align="center" >'. $records['Student_No']. '</td>';
                                 echo '<td align="center">' . $records['fname'] . ' ' . $records['initial'] . '. ' . 
                                 $records['lname'] . '</td>';
                                 echo '<td align="center">' . $records['sec'] . '<a> </td>';
                                 echo '<td align="center" >' . number_format($records['Buying_Power'],2) . '</td>';
-                                
+                                echo '<form action="deletestudent.php" method="POST">';
+                                echo '<input type="hidden" name="id" value="' .$records['Student_No']. '">';
+                                echo '<td><input type="submit" class="btn btn-danger" value="remove" data-toggle="modal" data-target="#exampleModalCenter"></td>';
+                                echo '</form>';
                         echo '</tr>';
                     $counter++;
-                    if($counter>=5){
+                    if($counter>=6){
                         break;
                     }
                     }
                 ?>
-            </tr>
-        </table>
-        </div>
-                    <h4>Students</h4>
-        <div class="scroller">
-        <table class="table table-hover table-dark" >
-            <tr>
-                <th>Student Number</th>
-                <th>Name</th>
-                <th>Section</th>
-                <th>Total Cash</th>
-            </tr>    
-            <tr>
-                <?php
+                    </tbody>
+            </table>
+
+
+            <!--List of Students-->
+
+            <center><h2>AFM Students</h2></center>
+
+            
+            <table class="table table-striped table-hover tables">
+                    <thead>
+                    <tbody>
+                    <tr>
+                    <th align='center' >Student Number</th>
+                    <th align="center" >Name</th>
+                    <th align="center" >Section</th>
+                    <th align="center" >Total Cash</th>
+                    </tr>
+                    </thead>
+
+                    
+                    <tr>
+                    <?php
                     while ($records=mysqli_fetch_array($try)){
                         echo '<tr>';
                                 echo '<td align="center" >'. $records['Student_No']. '</td>';
@@ -108,15 +135,14 @@ else{
                                 // form submit to delete
                                 echo '<form action="deletestudent.php" method="POST">';
                                 echo '<input type="hidden" name="id" value="' .$records['Student_No']. '">';
-                                echo '<td><input type="submit" value="remove"</td>';
+                                echo '<td><input type="submit" class="btn btn-danger" value="remove" data-toggle="modal" data-target="#exampleModalCenter"></td>';
                                 echo '</form>';
                         echo '</tr>';
                     }
                 ?>
-            </tr>
-        </table>
-        </div>
-                </center>
+                    </tbody>
+            </table>
+      </div>
     </div>
 </body>
 </html>
